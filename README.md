@@ -70,5 +70,3 @@ How to reference NS3-RDCN?
 ================================
 Please use the following bibtex:
 
-<blank>
->>>>>>> a5276578aa0442e697095b68a0c5211943ba9526
