@@ -21,26 +21,26 @@ def extract_avg_delay_time(file_path):
 def main():
     port_groups = {
         "16ports": [
-            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_dynamic_16ports_1G_mix_FB_INF.xml", "Solstice"),
-            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_fixed_16ports_1G_mix_FB_INF.xml", "RotorNet"),
+            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_solstice_16ports_1G_mix_FB_INF.xml", "Solstice"),
+            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_rotornet_16ports_1G_mix_FB_INF.xml", "RotorNet"),
             ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_kec_16ports_1G_mix_FB_INF.xml", "kEC"),
             ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_p4_16ports_1G_mix_FB.xml", "P4-DADS")
         ],
         "32ports": [
-            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_dynamic_32ports_1G_mix_FB_INF.xml", "Solstice"),
-            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_fixed_32ports_1G_mix_FB_INF.xml", "RotorNet"),
+            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_solstice_32ports_1G_mix_FB_INF.xml", "Solstice"),
+            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_rotornet_32ports_1G_mix_FB_INF.xml", "RotorNet"),
             ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_kec_32ports_1G_mix_FB_INF.xml", "kEC"),
             ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_p4_32ports_1G_mix_FB.xml", "P4-DADS")
         ],
         "64ports": [
-            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_dynamic_64ports_1G_mix_FB_INF.xml", "Solstice"),
-            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_fixed_64ports_1G_mix_FB_INF.xml", "RotorNet"),
+            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_solstice_64ports_1G_mix_FB_INF.xml", "Solstice"),
+            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_rotornet_64ports_1G_mix_FB_INF.xml", "RotorNet"),
             ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_kec_64ports_1G_mix_FB_INF.xml", "kEC"),
             ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_p4_64ports_1G_mix_FB.xml", "P4-DADS")
         ],
         "128ports": [
-            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_dynamic_128ports_1G_mix_FB_INF.xml", "Solstice"),
-            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_fixed_128ports_1G_mix_FB_INF.xml", "RotorNet"),
+            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_solstice_128ports_1G_mix_FB_INF.xml", "Solstice"),
+            ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_rotornet_128ports_1G_mix_FB_INF.xml", "RotorNet"),
             ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_kec_128ports_1G_mix_FB_INF.xml", "kEC"),
             ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_p4_128ports_1G_mix_FB.xml", "P4-DADS")
         ],

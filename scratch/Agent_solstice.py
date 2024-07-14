@@ -45,7 +45,7 @@ for i in range(iterationNum):
     queue_length_sums = []
     prev_max_idx = None  # Track previous max index
 
-    with open('queue_lengths_dynamic_mix.txt', 'w') as file:
+    with open('queue_lengths_solstice_mix.txt', 'w') as file:
         pass  # Open file in write mode to clear contents
 
     while True:
@@ -73,12 +73,10 @@ for i in range(iterationNum):
         action = {'DataRate': ds, 'BM': bs}
         obs, reward, done, info = env.step(action)
 
-        print("Step: ", stepIdx)
-        print("---obs, reward, done, info: ", obs, reward, done, info)     
-        print ("************  ", total_queue_received)
+        
 
         if stepIdx % 10 == 0:  # Every 10 steps, write average queue length to file
-            with open('queue_lengths_dynamic_mix.txt', 'a') as file:
+            with open('queue_lengths_solstice_mix.txt', 'a') as file:
                 file.write(f"{sum(queue_length_sums) / 10}\n")
             queue_length_sums = []
 

@@ -57,33 +57,23 @@ void LoadTrafficModel(std::vector<uint32_t>& flowSizes, std::vector<double>& flo
 
 void ReceivedPacketCallback (Ptr<const Packet> packet, const Address &from)
 {
-    // 패킷이 어떤 주소에서 왔는지 확인합니다.
+    
     Ipv4Address srcAddr = InetSocketAddress::ConvertFrom(from).GetIpv4();
     
-    // ostringstream 객체를 사용하여 Ipv4Address 객체를 문자열로 변환합니다.
+    
     std::ostringstream oss;
     oss << srcAddr;
     std::string addrStr = oss.str();
-    
-    // 파일 이름을 생성합니다. 주소를 파일 이름의 일부로 사용합니다.
-    std::string fileName = "packet_log_dynamic_" + addrStr + ".txt";
-    
-    // 파일을 append 모드로 엽니다.
+    std::string fileName = "packet_log_solstice_" + addrStr + ".txt";
     std::ofstream logFile(fileName.c_str(), std::ios_base::app);
-    
-    // 파일이 제대로 열렸는지 확인합니다.
     if (!logFile.is_open())
     {
         NS_LOG_ERROR("Error opening log file!");
         return;
     }
-    
-    // 패킷 정보를 파일에 작성합니다.
     logFile << "Packet received at " << Simulator::Now().GetSeconds()
             << " seconds from " << srcAddr
             << " packet size: " << packet->GetSize() << std::endl;
-    
-    // 파일을 닫습니다.
     logFile.close();
 }
 
@@ -129,7 +119,7 @@ main (int argc, char *argv[])
   };
 
 //   for (const auto& ip : ipAddresses) {
-//       std::string filename = "packet_log_dynamic_16ports" + ip + ".txt";
+//       std::string filename = "packet_log_solstice_16ports" + ip + ".txt";
 //       std::ofstream logFile(filename, std::ios_base::trunc);
 //       logFile.close();
 //   }
@@ -187,17 +177,14 @@ main (int argc, char *argv[])
       ipBases.push_back(base);
   }
 
-  // 주어진 ipAddresses는 미리 정의되어 있다고 가정합니다.
+  
   std::vector<Ipv4InterfaceContainer> interfaces(ipAddresses.size());
-
-  // 각 IP 주소에 대한 인터페이스 생성
   Ipv4AddressHelper ipv4;
   for (std::size_t i = 0; i < ipAddresses.size(); ++i) {
       std::string base = ipAddresses[i].substr(0, ipAddresses[i].find_last_of('.') + 1) + "0";
       ipv4.SetBase(base.c_str(), "255.255.255.0");
       interfaces[i] = ipv4.Assign(devices[i]);
   }
-  // OnOffHelper를 이용한 애플리케이션 생성
   std::vector<ApplicationContainer> appsVector;
   uint16_t port = 9;
   // double beta = 1;
@@ -223,7 +210,7 @@ randomVariable->SetAttribute("Max", DoubleValue(1.0));
 for (std::size_t i = 0; i < nodePairs.size(); ++i) {
   double randVal = randomVariable->GetValue();
 
-  // Weighted random sampling approach (alternative: kernel density estimation)
+  // Weighted random sampling approach 
   double totalArea = 0.0;
   for (double pdfValue : flowPDF) {
     totalArea += pdfValue;
@@ -306,7 +293,7 @@ for (std::size_t i = 0; i < nodePairs.size(); ++i) {
   Simulator::Run ();
 
   // Serialize Flow Monitor data to xml
-  flowMonitor->SerializeToXmlFile ("FlowMonitorData_dynamic_16ports_1G_mix_FB_INF.xml", true, true);
+  flowMonitor->SerializeToXmlFile ("FlowMonitorData_solstice_16ports_1G_mix_FB_INF.xml", true, true);
   
 //   Simulator::Destroy ();
 //   NS_LOG_INFO ("Done.");

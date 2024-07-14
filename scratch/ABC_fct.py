@@ -20,8 +20,8 @@ def extract_avg_delay_time(file_path):
 # Main function
 def main():
     file_info = [
-        ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP1/FlowMonitorData_p4_128ports_1G_mix_FB_ABC.xml", "P4-DADS\n(Static)"),
-        ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP1/FlowMonitorData_p4_128ports_1G_mix_FB.xml", "P4-DADS\n(ABC)")
+        ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP1/FlowMonitorData_p4_128ports_1G_mix_FB.xml", "P4-DADS\n(Static)"),
+        ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP1/FlowMonitorData_p4_128ports_1G_mix_FB_ABC.xml", "P4-DADS\n(ABC)")
     ]
 
     all_avg_delay_times = []

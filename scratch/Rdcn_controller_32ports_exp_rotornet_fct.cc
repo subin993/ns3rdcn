@@ -55,35 +55,26 @@ void LoadTrafficModel(std::vector<uint32_t>& flowSizes, std::vector<double>& flo
 }
 
 
+
 void ReceivedPacketCallback (Ptr<const Packet> packet, const Address &from)
 {
-    // 패킷이 어떤 주소에서 왔는지 확인합니다.
+    
     Ipv4Address srcAddr = InetSocketAddress::ConvertFrom(from).GetIpv4();
     
-    // ostringstream 객체를 사용하여 Ipv4Address 객체를 문자열로 변환합니다.
+    
     std::ostringstream oss;
     oss << srcAddr;
     std::string addrStr = oss.str();
-    
-    // 파일 이름을 생성합니다. 주소를 파일 이름의 일부로 사용합니다.
-    std::string fileName = "packet_log_p4_" + addrStr + ".txt";
-    
-    // 파일을 append 모드로 엽니다.
+    std::string fileName = "packet_log_rotornet_" + addrStr + ".txt";
     std::ofstream logFile(fileName.c_str(), std::ios_base::app);
-    
-    // 파일이 제대로 열렸는지 확인합니다.
     if (!logFile.is_open())
     {
         NS_LOG_ERROR("Error opening log file!");
         return;
     }
-    
-    // 패킷 정보를 파일에 작성합니다.
     logFile << "Packet received at " << Simulator::Now().GetSeconds()
             << " seconds from " << srcAddr
             << " packet size: " << packet->GetSize() << std::endl;
-    
-    // 파일을 닫습니다.
     logFile.close();
 }
 
@@ -115,9 +106,10 @@ main (int argc, char *argv[])
   LogComponentEnable ("RDCN", LOG_LEVEL_INFO);
 
   //opengym environment
-  uint32_t openGymPort = 5565;
-  double steptime = 0.0001;
-//   double steptime = 0.00001; // Dynamic-scheduling
+  uint32_t openGymPort = 5557;
+//   double steptime = 0.01;
+  double steptime = 0.00005; 
+  // double steptime = 0.0002; // 
 //   double steptime = 0.01; // Fixed-scheduling
 
 
@@ -131,7 +123,7 @@ main (int argc, char *argv[])
 };
 
 //   for (const auto& ip : ipAddresses) {
-//       std::string filename = "packet_log_dynamic_32ports" + ip + ".txt";
+//       std::string filename = "packet_log_solstice_32ports" + ip + ".txt";
 //       std::ofstream logFile(filename, std::ios_base::trunc);
 //       logFile.close();
 //   }
@@ -191,10 +183,8 @@ main (int argc, char *argv[])
       ipBases.push_back(base);
   }
 
-  // 주어진 ipAddresses는 미리 정의되어 있다고 가정합니다.
+  
   std::vector<Ipv4InterfaceContainer> interfaces(ipAddresses.size());
-
-  // 각 IP 주소에 대한 인터페이스 생성
   Ipv4AddressHelper ipv4;
   for (std::size_t i = 0; i < ipAddresses.size(); ++i) {
       std::string base = ipAddresses[i].substr(0, ipAddresses[i].find_last_of('.') + 1) + "0";
@@ -202,7 +192,6 @@ main (int argc, char *argv[])
       interfaces[i] = ipv4.Assign(devices[i]);
   }
 
-  // OnOffHelper를 이용한 애플리케이션 생성
   std::vector<ApplicationContainer> appsVector;
   uint16_t port = 9;
   // double beta = 1;
@@ -211,8 +200,6 @@ main (int argc, char *argv[])
   // double alpha = 5 * beta;
   double beta = 2;
   double alpha = 60 * beta;
-NS_LOG_INFO("Assign IP Addresses3.");
-
 // Assuming pre-calculated flowSizes and flowCDF (from previous analysis)
 std::vector<double> flowPDF(flowCDF.size()); // Initialize PDF
 
@@ -228,7 +215,7 @@ randomVariable->SetAttribute("Max", DoubleValue(1.0));
 for (std::size_t i = 0; i < nodePairs.size(); ++i) {
   double randVal = randomVariable->GetValue();
 
-  // Weighted random sampling approach (alternative: kernel density estimation)
+  // Weighted random sampling approach 
   double totalArea = 0.0;
   for (double pdfValue : flowPDF) {
     totalArea += pdfValue;
@@ -281,64 +268,6 @@ for (std::size_t i = 0; i < nodePairs.size(); ++i) {
     }
   NS_LOG_INFO ("Assign IP Addresses4.");
 
-//   std::vector<ApplicationContainer> appsVector;
-//   uint16_t port = 9;
-//   double beta = 1;
-//   double alpha = 30 * beta;
-
-//   NS_LOG_INFO ("Assign IP Addresses3.");
-
-//   Ptr<UniformRandomVariable> randomVariable = CreateObject<UniformRandomVariable>();
-//   randomVariable->SetAttribute("Min", DoubleValue(0.0));
-//   randomVariable->SetAttribute("Max", DoubleValue(1.0));
-  
-//   for (std::size_t i = 0; i < nodePairs.size(); ++i) {
-//     double randVal = randomVariable->GetValue();
-//     auto it = std::lower_bound(flowCDF.begin(), flowCDF.end(), randVal);
-//     uint32_t index = it - flowCDF.begin();
-//     uint32_t flowSize = flowSizes[index];
-//     double interArrivalTime = 1.0 / flowCDF[index]; // Inversely proportional to CDF value
-
-//     NS_LOG_UNCOND(i);
-//     NS_LOG_UNCOND(flowSize);
-//     NS_LOG_UNCOND(flowCDF[index]);
-
-//     uint32_t nodeIndex = nodePairs[i].first;
-//     OnOffHelper onoff("ns3::UdpSocketFactory", InetSocketAddress(interfaces[i].GetAddress(1), port));
-//     // onoff.SetAttribute("OnTime", StringValue("ns3::ConstantRandomVariable[Constant=1]"));
-//     // onoff.SetAttribute("OffTime", StringValue("ns3::ConstantRandomVariable[Constant=0]"));
-//     onoff.SetAttribute("OnTime", StringValue("ns3::ExponentialRandomVariable[Mean=" + std::to_string(1/alpha) + "]"));
-//     onoff.SetAttribute("OffTime", StringValue("ns3::ExponentialRandomVariable[Mean=" + std::to_string(1/beta) + "]"));
-    
-//     // std::string rate = std::to_string(flowSize * 8 / 0.1) + "kbps"; // Adjust rate based on flow size
-//     // onoff.SetAttribute("DataRate", StringValue(rate));
-//     // onoff.SetAttribute("PacketSize", UintegerValue(flowSize));
-
-//     std::string rate;
-//     if (flowSize <= 10000) {
-//         rate = std::to_string(flowSize * 8 / interArrivalTime) + "bps";  // Rate in kbps
-//         flowSize = flowSize;
-//         NS_LOG_UNCOND(rate);
-//     } else if (flowSize > 10000 && flowSize < 10000000) {
-//         rate = std::to_string((flowSize * 8 / interArrivalTime) / 1000) + "kbps";  // Rate in Mbps
-//         flowSize = flowSize/1000;
-//         NS_LOG_UNCOND(rate);
-//     } else if (flowSize >= 10000000 && flowSize < 10000000000) {
-//         rate = std::to_string((flowSize * 8 / interArrivalTime) / 1000000) + "Mbps";  // Rate in Gbps
-//         flowSize = flowSize/1000000;
-//         NS_LOG_UNCOND(rate);
-//     }
-//     onoff.SetAttribute("DataRate", StringValue(rate));
-//     onoff.SetAttribute("PacketSize", UintegerValue(flowSize));
-
-//     ApplicationContainer currentApp = onoff.Install(c.Get(nodeIndex));
-//     currentApp.Start(Seconds(0.1));
-//     currentApp.Stop(Seconds(20.0));
-
-//     appsVector.push_back(currentApp);
-//     }
-  NS_LOG_INFO ("Assign IP Addresses4.");
-
   // Receive Application
   for (uint32_t i = 0; i <= 6; i++) {
       PacketSinkHelper sink ("ns3::UdpSocketFactory", Address (InetSocketAddress (Ipv4Address::GetAny (), port)));
@@ -368,7 +297,7 @@ for (std::size_t i = 0; i < nodePairs.size(); ++i) {
   Simulator::Run ();
 
   // Serialize Flow Monitor data to xml
-  flowMonitor->SerializeToXmlFile ("FlowMonitorData_p4_32ports_1G_mix_FB.xml", true, true);
+  flowMonitor->SerializeToXmlFile ("FlowMonitorData_rotornet_32ports_1G_mix_FB_INF.xml", true, true);
   
 //   Simulator::Destroy ();
 //   NS_LOG_INFO ("Done.");

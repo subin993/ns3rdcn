@@ -30,7 +30,7 @@ for i in range(iterationNum):
     stepIdx = 0
     queue_length_sums = []
 
-    with open('queue_lengths_fixed_mix.txt', 'w') as file:
+    with open('queue_lengths_rotornet_mix.txt', 'w') as file:
         pass
 
     while True:
@@ -51,15 +51,10 @@ for i in range(iterationNum):
             'DataRate': ds,
             'BM': bs
         }
-
-        print("---action: ", action['DataRate'])
-        print("Step: ", stepIdx)
         obs, reward, done, info = env.step(action)
-        print("---obs, reward, done, info: ", obs, reward, done, info)
-        print("Total queue received: ", total_queue_received)
-
+        
         if stepIdx % 20 == 0:
-            with open('queue_lengths_fixed_mix.txt', 'a') as file:
+            with open('queue_lengths_rotornet_mix.txt', 'a') as file:
                 file.write(f"{sum(queue_length_sums) / 20}\n")
             queue_length_sums = []
 

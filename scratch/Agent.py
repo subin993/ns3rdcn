@@ -26,7 +26,7 @@ print("Action space: ", env.action_space, env.action_space.dtype)
 
 currIt = 0
 # Main simulation loop
-bs = [5000] * num_entities  # Initial buffer sizes
+bs = [5000] * num_entities  
 
 for i in range(1):
     print("Start iteration: ", currIt)
@@ -55,39 +55,26 @@ for i in range(1):
 
         
         for idx, q_size in enumerate(qs):
-            # Calculate queue size as a percentage of buffer size
+            
             queue_percentage = (q_size / bs[idx]) * 100 if bs[idx] > 0 else 0
-            # Current policy threshold percentage
+            
 
             if queue_percentage >= current_threshold:
                 ds[idx] = 100000
                 # token_possession[idx] = 1
-                break  # Adjust and stop at the first queue meeting the threshold
-
-        # for idx, value in enumerate(qs):
-        #     if value > 100:
-        #         ds[idx] = 1000000000
-        #         break
-
+                break 
 
         action = {'DataRate': ds, 'BM': bs}
         obs, reward, done, info = env.step(action)
-        # print("obs : ",obs)
-        # print("done : ",done)
-        print("---obs, reward, done, info: ", obs, reward, done, info)
-        print ("************  ", total_queue_received)
-        
         if stepIdx % 10 == 0: # Every 100 steps
-            with open('queue_lengths_p4_mix.txt', 'a') as file: # Use 'a' (append mode) to add data to the file without overwriting
-                file.write(f"{sum(queue_length_sums) / 10}\n")  # Save the sum of the last 100 values
+            with open('queue_lengths_p4_mix.txt', 'a') as file:
+                file.write(f"{sum(queue_length_sums) / 10}\n") 
             queue_length_sums = [] # Reset the list
 
         if done or stepIdx >= 200000:
             print("Iteration done")
             break
         
-        
-
     currIt += 1
     if currIt == iterationNum:
         env.close()

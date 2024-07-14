@@ -3,11 +3,11 @@ import pandas as pd
 import numpy as np
 from ns3gym import ns3env
 
-# Load heuristic policy from CSV
+# Load policy from CSV
 policy_df = pd.read_csv('itr_policy.csv')
 
 def get_policy(queue_size, token_possession, buffer_size, current_threshold):
-    # Find the closest matching policy
+    # Find the matching policy
     closest_policy = policy_df.iloc[((policy_df['Queue Size'] - queue_size).abs() + 
                                      (policy_df['Token Possession'] - token_possession).abs() +
                                      (policy_df['Buffer Size'] - buffer_size).abs() + 
@@ -36,7 +36,7 @@ print("Observation space: ", env.observation_space, env.observation_space.dtype)
 print("Action space: ", env.action_space, env.action_space.dtype)
 
 # Main simulation loop
-bs = [1000] * num_entities  # Initial buffer sizes
+bs = [1000] * num_entities  
 for i in range(iterationNum):
     print("Start iteration: ", i)
     obs = env.reset()
@@ -55,7 +55,7 @@ for i in range(iterationNum):
         queue_length_sums.append(total_queue_length)
 
         qs = [queuelength[i] for i in range(num_entities)]
-        ds = [1] * num_entities  # Initial DataRate
+        ds = [1] * num_entities  
         token_possession = [0] * num_entities
 
         # non_zero_values = [q for q in qs if q > 0]
@@ -63,15 +63,15 @@ for i in range(iterationNum):
         # print("Threshold for high priority queue adjustment: ", threshold)
 
         for idx, q_size in enumerate(qs):
-            # Calculate queue size as a percentage of buffer size
+            
             queue_percentage = (q_size / bs[idx]) * 100 if bs[idx] > 0 else 0
-            # Current policy threshold percentage
+            
             potential_new_threshold = current_threshold
 
             if queue_percentage >= potential_new_threshold:
                 ds[idx] = 100000
                 token_possession[idx] = 1
-                break  # Adjust and stop at the first queue meeting the threshold
+                break 
 
         # Policy application and action preparation
         for idx, q_size in enumerate(qs):

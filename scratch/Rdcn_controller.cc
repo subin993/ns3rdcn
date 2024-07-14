@@ -86,33 +86,23 @@ NS_LOG_COMPONENT_DEFINE ("RDCN");
 
 void ReceivedPacketCallback (Ptr<const Packet> packet, const Address &from)
 {
-    // 패킷이 어떤 주소에서 왔는지 확인합니다.
+    
     Ipv4Address srcAddr = InetSocketAddress::ConvertFrom(from).GetIpv4();
     
-    // ostringstream 객체를 사용하여 Ipv4Address 객체를 문자열로 변환합니다.
+    
     std::ostringstream oss;
     oss << srcAddr;
     std::string addrStr = oss.str();
-    
-    // 파일 이름을 생성합니다. 주소를 파일 이름의 일부로 사용합니다.
     std::string fileName = "packet_log_" + addrStr + ".txt";
-    
-    // 파일을 append 모드로 엽니다.
     std::ofstream logFile(fileName.c_str(), std::ios_base::app);
-    
-    // 파일이 제대로 열렸는지 확인합니다.
     if (!logFile.is_open())
     {
         NS_LOG_ERROR("Error opening log file!");
         return;
     }
-    
-    // 패킷 정보를 파일에 작성합니다.
     logFile << "Packet received at " << Simulator::Now().GetSeconds()
             << " seconds from " << srcAddr
             << " packet size: " << packet->GetSize() << std::endl;
-    
-    // 파일을 닫습니다.
     logFile.close();
 }
 

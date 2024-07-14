@@ -23,8 +23,8 @@ NS_LOG_COMPONENT_DEFINE ("RDCN");
 
 void LoadTrafficModel(std::vector<uint32_t>& flowSizes, std::vector<double>& flowCDF) {
     // std::ifstream file("/home/rdcn/ns-3.35-workshop/ns-3.35/scratch/datamining.csv");
-    std::ifstream file("/home/rdcn/ns-3.35-workshop/ns-3.35/scratch/websearch.csv");
-    // std::ifstream file("/home/rdcn/ns-3.35-workshop/ns-3.35/scratch/FB_Hadoop_Inter_Rack_FlowCDF.csv");
+    // std::ifstream file("/home/rdcn/ns-3.35-workshop/ns-3.35/scratch/websearch.csv");
+    std::ifstream file("/home/rdcn/ns-3.35-workshop/ns-3.35/scratch/FB_Hadoop_Inter_Rack_FlowCDF.csv");
     std::string line;
     if (!file.is_open()) {
         NS_LOG_UNCOND("Error opening file");
@@ -57,35 +57,27 @@ void LoadTrafficModel(std::vector<uint32_t>& flowSizes, std::vector<double>& flo
 
 void ReceivedPacketCallback (Ptr<const Packet> packet, const Address &from)
 {
-    // 패킷이 어떤 주소에서 왔는지 확인합니다.
+    
     Ipv4Address srcAddr = InetSocketAddress::ConvertFrom(from).GetIpv4();
     
-    // ostringstream 객체를 사용하여 Ipv4Address 객체를 문자열로 변환합니다.
+    
     std::ostringstream oss;
     oss << srcAddr;
     std::string addrStr = oss.str();
-    
-    // 파일 이름을 생성합니다. 주소를 파일 이름의 일부로 사용합니다.
     std::string fileName = "packet_log_kec_" + addrStr + ".txt";
-    
-    // 파일을 append 모드로 엽니다.
     std::ofstream logFile(fileName.c_str(), std::ios_base::app);
-    
-    // 파일이 제대로 열렸는지 확인합니다.
     if (!logFile.is_open())
     {
         NS_LOG_ERROR("Error opening log file!");
         return;
     }
-    
-    // 패킷 정보를 파일에 작성합니다.
     logFile << "Packet received at " << Simulator::Now().GetSeconds()
             << " seconds from " << srcAddr
             << " packet size: " << packet->GetSize() << std::endl;
-    
-    // 파일을 닫습니다.
     logFile.close();
 }
+
+
 
 void PacketsInQueueCallback(uint32_t oldValue, uint32_t newValue) {
     NS_LOG_UNCOND("Queue check at " << Simulator::Now ().GetSeconds ()
@@ -135,27 +127,20 @@ main (int argc, char *argv[])
   double steptime = 0.0001; // Dynamic-scheduling
   // double steptime = 0.01; // Fixed-scheduling
 
-
   // 로그 파일 초기화
   std::vector<std::string> ipAddresses = {
-    "10.0.1.1", "10.0.3.1", "10.0.4.1", "10.0.5.1", "10.0.6.1", "10.0.7.1", "10.0.8.1", "10.0.9.1", "10.0.10.1", "10.0.11.1", "10.0.12.1",
-    "10.1.2.1", "10.1.4.1", "10.1.5.1", "10.1.6.1", "10.1.7.1", "10.1.8.1", "10.1.9.1", "10.1.10.1", "10.1.11.1", "10.1.12.1",
-    "10.2.3.1", "10.2.5.1", "10.2.6.1", "10.2.7.1", "10.2.8.1", "10.2.9.1", "10.2.11.1", "10.2.12.1",
-    "10.3.4.1", "10.3.6.1", "10.3.7.1", "10.3.8.1", "10.3.9.1", "10.3.10.1", "10.3.12.1",
-    "10.4.5.1", "10.4.7.1", "10.4.8.1", "10.4.9.1", "10.4.10.1", "10.4.12.1",
-    "10.5.6.1", "10.5.8.1", "10.5.9.1", "10.5.10.1", "10.5.11.1", "10.5.12.1",
-    "10.6.7.1", "10.6.9.1", "10.6.10.1", "10.6.11.1",
-    "10.7.8.1", "10.7.9.1", "10.7.10.1", "10.7.12.1",
-    "10.8.9.1", "10.8.11.1", "10.8.12.1",
-    "10.9.10.1", "10.9.12.1",
-    "10.10.11.1", "10.10.12.1",
-    "10.11.12.1"
+    "10.0.1.1", "10.0.2.1", "10.0.3.1", "10.0.5.1", "10.0.6.1", "10.0.7.1", "10.0.8.1",
+    "10.1.2.1", "10.1.3.1", "10.1.4.1", "10.1.6.1", "10.1.7.1", "10.1.8.1",
+    "10.2.3.1", "10.2.4.1", "10.2.5.1", "10.2.6.1", "10.2.7.1", "10.2.8.1", 
+    "10.3.4.1", "10.3.5.1", "10.3.6.1", "10.3.8.1", 
+    "10.4.5.1", "10.4.6.1", "10.4.7.1",
+    "10.5.6.1", "10.5.7.1", "10.5.8.1",
+    "10.6.7.1", "10.6.8.1", 
+    "10.7.8.1",
 };
 
-
-
 //   for (const auto& ip : ipAddresses) {
-//       std::string filename = "packet_log_kec_" + ip + ".txt";
+//       std::string filename = "packet_log_kec_64ports" + ip + ".txt";
 //       std::ofstream logFile(filename, std::ios_base::trunc);
 //       logFile.close();
 //   }
@@ -163,7 +148,7 @@ main (int argc, char *argv[])
   NodeContainer c;
 
   // Crate Node
-  c.Create (13);
+  c.Create (9);
 
   // Gym 
   Ptr<MyGymEnv> Server = CreateObject<MyGymEnv> (steptime);
@@ -172,18 +157,14 @@ main (int argc, char *argv[])
 
   // Circuit switch path
   std::vector<std::pair<uint32_t, uint32_t>> nodePairs = {
-    {0, 1}, {0, 3}, {0, 4}, {0, 5}, {0, 6}, {0, 7}, {0, 8}, {0, 9}, {0, 10}, {0, 11}, {0, 12},
-    {1, 2}, {1, 4}, {1, 5}, {1, 6}, {1, 7}, {1, 8}, {1, 9}, {1, 10}, {1, 11}, {1, 12},
-    {2, 3}, {2, 5}, {2, 6}, {2, 7}, {2, 8}, {2, 9}, {2, 11}, {2, 12},
-    {3, 4}, {3, 6}, {3, 7}, {3, 8}, {3, 9}, {3, 10}, {3, 12},
-    {4, 5}, {4, 7}, {4, 8}, {4, 9}, {4, 10}, {4, 12},
-    {5, 6}, {5, 8}, {5, 9}, {5, 10}, {5, 11}, {5, 12},
-    {6, 7}, {6, 9}, {6, 10}, {6, 11},
-    {7, 8}, {7, 9}, {7, 10}, {7, 12},
-    {8, 9}, {8, 11}, {8, 12},
-    {9, 10}, {9, 12},
-    {10, 11}, {10, 12},
-    {11, 12}
+    {0, 1}, {0, 2}, {0, 3}, {0, 5}, {0, 6}, {0, 7}, {0, 8},
+    {1, 2}, {1, 3}, {1, 4}, {1, 6}, {1, 7}, {1, 8},
+    {2, 3}, {2, 4}, {2, 5}, {2, 6}, {2, 7}, {2, 8},
+    {3, 4}, {3, 5}, {3, 6}, {3, 8},
+    {4, 5}, {4, 6}, {4, 7},
+    {5, 6}, {5, 7}, {5, 8}, 
+    {6, 7}, {6, 8}, 
+    {7, 8}
 };
 
   std::vector<NodeContainer> nodeContainers;
@@ -200,7 +181,7 @@ main (int argc, char *argv[])
   p2p.SetChannelAttribute("Delay", StringValue("1us"));
 
   std::vector<NetDeviceContainer> devices;
-  for (int i = 0; i < 64; ++i) {
+  for (int i = 0; i < 32; ++i) {
       devices.push_back(p2p.Install(nodeContainers[i]));
   }
 
@@ -225,10 +206,8 @@ main (int argc, char *argv[])
       ipBases.push_back(base);
   }
 
-  // 주어진 ipAddresses는 미리 정의되어 있다고 가정합니다.
+  
   std::vector<Ipv4InterfaceContainer> interfaces(ipAddresses.size());
-
-  // 각 IP 주소에 대한 인터페이스 생성
   Ipv4AddressHelper ipv4;
   for (std::size_t i = 0; i < ipAddresses.size(); ++i) {
       std::string base = ipAddresses[i].substr(0, ipAddresses[i].find_last_of('.') + 1) + "0";
@@ -236,14 +215,13 @@ main (int argc, char *argv[])
       interfaces[i] = ipv4.Assign(devices[i]);
   }
 
-  // OnOffHelper를 이용한 애플리케이션 생성
   std::vector<ApplicationContainer> appsVector;
   uint16_t port = 9;
   // double beta = 1;
   // double alpha = 30 * beta;
   // double beta = 1;
   // double alpha = 5 * beta;
-  double beta = 8;
+  double beta = 4;
   double alpha = 60 * beta;
 NS_LOG_INFO("Assign IP Addresses3.");
 
@@ -262,7 +240,7 @@ randomVariable->SetAttribute("Max", DoubleValue(1.0));
 for (std::size_t i = 0; i < nodePairs.size(); ++i) {
   double randVal = randomVariable->GetValue();
 
-  // Weighted random sampling approach (alternative: kernel density estimation)
+  // Weighted random sampling approach 
   double totalArea = 0.0;
   for (double pdfValue : flowPDF) {
     totalArea += pdfValue;
@@ -317,7 +295,7 @@ for (std::size_t i = 0; i < nodePairs.size(); ++i) {
   
 
   // Receive Application
-  for (uint32_t i = 0; i <=12; i++) {
+  for (uint32_t i = 0; i <= 8; i++) {
       PacketSinkHelper sink ("ns3::UdpSocketFactory", Address (InetSocketAddress (Ipv4Address::GetAny (), port)));
       ApplicationContainer sinkApps = sink.Install(c.Get(i));
       sinkApps.Start (Seconds (0.1));
@@ -367,7 +345,7 @@ for (std::size_t i = 0; i < nodePairs.size(); ++i) {
   Simulator::Run ();
 
   // Serialize Flow Monitor data to xml
-  flowMonitor->SerializeToXmlFile ("FlowMonitorData_kec_128ports_1G_mix_Websearch.xml", true, true);
+  flowMonitor->SerializeToXmlFile ("FlowMonitorData_kec_64ports_1G_mix_FB_INF.xml", true, true);
   
 //   Simulator::Destroy ();
 //   NS_LOG_INFO ("Done.");

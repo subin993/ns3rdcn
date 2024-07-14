@@ -73,9 +73,7 @@ for i in range(iterationNum):
         action = {'DataRate': ds, 'BM': bs}
         obs, reward, done, info = env.step(action)
 
-        print("Step: ", stepIdx)
-        print("---obs, reward, done, info: ", obs, reward, done, info)     
-        print ("************  ", total_queue_received)
+        
 
         if stepIdx % 10 == 0:  # Every 10 steps, write average queue length to file
             with open('queue_lengths_kec_mix.txt', 'a') as file:
