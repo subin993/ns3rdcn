@@ -60,7 +60,6 @@ To run all of the scenarios, open the terminal and run the command:
 ./waf --run scratch/Rdcn_controller_{number of ports}ports_exp_{algorithm}_fct.cc
 ```
 
-
 ## Running various RDCN scheduling algorithms
 In the directory scratch, there are various RDCN scheduling algorithms (e.g., Solstice, RotorNet, kEC, P4-DADS, etc.).
 
