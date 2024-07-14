@@ -52,12 +52,24 @@ pip3 install --user ./src/opengym/model/ns3gym
 ```
 
 ## Setting ns-3 environment
-
+To run all of scenarios (Rdcn_controller_{number of ports}ports_exp_{algorithm}_fct.cc) in the directory of scratch, you can configure your own settings for scenarios (Traffic model, Network load (ON/OFF period), Simulation time, etc.) 
 
 ## Running ns-3 environment
+To run all of the scenarios, open the terminal and run the command:
+```shell
+./waf --run scratch/Rdcn_controller_{number of ports}ports_exp_{algorithm}_fct.cc
+```
 
 
 ## Running various RDCN scheduling algorithms
+In the directory scratch, there are various RDCN scheduling algorithms (e.g., Solstice, RotorNet, kEC, P4-DADS, etc.).
+
+Open a new terminal and run the command:
+
+```shell
+cd ./scratch
+python3 <name-of-algorithm>.py
+```
 
 Contact
 ================================
