@@ -58,10 +58,6 @@ for i in range(iterationNum):
         ds = [1] * num_entities  
         token_possession = [0] * num_entities
 
-        # non_zero_values = [q for q in qs if q > 0]
-        # threshold = np.percentile(non_zero_values, 95) if non_zero_values else 0
-        # print("Threshold for high priority queue adjustment: ", threshold)
-
         for idx, q_size in enumerate(qs):
             
             queue_percentage = (q_size / bs[idx]) * 100 if bs[idx] > 0 else 0
@@ -79,7 +75,6 @@ for i in range(iterationNum):
             token = token_possession[idx]
             policy = get_policy(q_size, token, buffer_size, current_threshold)
             potential_new_buffer_size = buffer_size + policy['Delta Buffer']
-            # potential_new_threshold = current_threshold + policy['Delta Threshold']
             bs[idx] = max(100, potential_new_buffer_size, q_size)
             # bs[idx] = 5000
 
