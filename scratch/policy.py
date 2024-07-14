@@ -61,15 +61,10 @@ def reward_function(current_state, action):
     packet_drops = max(0, Q_i + expected_arrivals - B_next)
     drop_penalty = 1000 * packet_drops  # Increase drop penalty
 
-    # Throughput reward: Assuming a higher reward if the buffer size allows processing more packets
     throughput_reward = min(Q_i + expected_arrivals, mu_OCS if T_i == 1 else mu_EPS)
     
-    # Check if B_next is zero to avoid division by zero
     buffer_utilization_reward = -1000 if B_next == 0 else -abs((B_next - min(Q_i + expected_arrivals, B_next))) * 1000
 
-    # # Modified costs for buffer and threshold adjustments
-    # buffer_cost = 0.5 * (B_next - B_i) ** 2  # Reduced cost for increasing buffer size
-    # threshold_cost = 0.1 * abs(P_next - 50)  # Reduced threshold adjustment cost
 
     return throughput_reward - drop_penalty + buffer_utilization_reward
 
@@ -77,9 +72,7 @@ def itr_heuristic(states, actions):
     policy = {}
     for state in states:
         best_action = None
-        max_reward = float('-inf')  # Start with the lowest possible reward
-
-        # Evaluate each action based on immediate reward
+        max_reward = float('-inf')
         for action in actions:
             reward = reward_function(state, action)
             if reward > max_reward:
@@ -96,9 +89,5 @@ def save_policy_to_csv(policy, filename='itr_policy_2.csv'):
         for state, action in policy.items():
             writer.writerow([*state, *action])
 
-# Run the greedy heuristic
 itr_policy = itr_heuristic(states, actions)
 save_policy_to_csv(itr_policy)
-
-# # Run value iteration
-# optimal_policy = value_iteration(states, actions)
