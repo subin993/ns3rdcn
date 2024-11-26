@@ -139,12 +139,6 @@ main (int argc, char *argv[])
     "10.7.8.1",
 };
 
-//   for (const auto& ip : ipAddresses) {
-//       std::string filename = "packet_log_kec_64ports" + ip + ".txt";
-//       std::ofstream logFile(filename, std::ios_base::trunc);
-//       logFile.close();
-//   }
-
   NodeContainer c;
 
   // Crate Node

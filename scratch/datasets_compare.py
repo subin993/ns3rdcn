@@ -50,19 +50,19 @@ for i, tech in enumerate(techniques):
     # Add text labels on the bars
     for bar in bars:
         yval = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.02, f'{yval:.2f}', ha='center', va='bottom', fontsize=22)
+        ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.02, f'{yval:.2f}', ha='center', va='bottom', fontsize=27)
 
 # Axis settings
 ax.set_xticks(positions + bar_width * 1.5)  # Center the ticks between the groups
-ax.set_xticklabels(datasets, fontsize=22, rotation=0, ha='center')
-ax.tick_params(axis='y', labelsize=22)
+ax.set_xticklabels(datasets, fontsize=28, rotation=0, ha='center')
+ax.tick_params(axis='y', labelsize=28)
 ax.set_ylim(0, 1.1)  # Set y-axis range
-ax.set_ylabel('Normalized aggregate throughput', fontsize=24)
-ax.set_xlabel('Traffic data', fontsize=24)
-ax.legend(loc='lower left', fontsize=22)
+ax.set_ylabel('Normalized aggregate throughput', fontsize=30)
+ax.set_xlabel('Traffic data', fontsize=30)
+ax.legend(loc='lower left', fontsize=28)
 ax.grid(True, axis='y', linestyle='--', alpha=0.7)
 
 # Save the graph
 plt.tight_layout()
-plt.savefig('dataset_compare.png', dpi=300, bbox_inches='tight')
+plt.savefig('dataset_compare_new.png', dpi=300, bbox_inches='tight')
 plt.show()

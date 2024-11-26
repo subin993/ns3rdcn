@@ -20,13 +20,7 @@ load_data = {
         'Solstice': 141971768,
         'RotorNet': 105828355,
         'kEC': 172144187
-    },
-    # 2: {
-    #     'P4-DADS': 260018266,
-    #     'Solstice': 152958150,
-    #     'RotorNet': 127711205,
-    #     'kEC': 186146963
-    # }
+    }
 }
 
 # Graph settings
@@ -60,19 +54,19 @@ for i, tech in enumerate(techniques):
     # Add text labels on the bars
     for j, bar in enumerate(bars):
         yval = bar.get_height()
-        ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.02, f'{yval:.2f}', ha='center', va='bottom', fontsize=22)
+        ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.02, f'{yval:.2f}', ha='center', va='bottom', fontsize=27)
 
 # Axis settings
 ax.set_xticks(index + bar_width * (len(techniques) - 1) / 2)
 ax.set_xticklabels([f'x{load}' for load in load_labels])
-ax.tick_params(axis='both', labelsize=22)
+ax.tick_params(axis='both', labelsize=28)
 ax.set_ylim(0, 1.1)  # Set y-axis range
-ax.set_ylabel('Normalized aggregate throughput', fontsize=24)
-ax.set_xlabel('Network load (FB_Hadoop)', fontsize=24)
-ax.legend(loc='lower left', fontsize=22)
+ax.set_ylabel('Normalized aggregate throughput', fontsize=30)
+ax.set_xlabel('Network load (FB_Hadoop)', fontsize=30)
+ax.legend(loc='lower left', fontsize=28)
 
 # Save the graph
 plt.tight_layout()
-plt.savefig('throughput_comparison_load.png', dpi=300, bbox_inches='tight')
+plt.savefig('throughput_comparison_load_new.png', dpi=300, bbox_inches='tight')
 plt.show()
 plt.close(fig)

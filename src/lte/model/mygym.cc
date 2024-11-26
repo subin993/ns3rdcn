@@ -121,8 +121,8 @@ Define action space
 Ptr<OpenGymSpace>
 MyGymEnv::GetActionSpace()
 {
-  // uint32_t flowNum = 64;
-  uint32_t flowNum = 64;
+  // uint32_t flowNum = 128;
+  uint32_t flowNum = 128;
   float low = 0.0;
   float high = 100.0;
   std::vector<uint32_t> shape = {flowNum,};
@@ -166,8 +166,8 @@ Collect observations
 Ptr<OpenGymDataContainer>
 MyGymEnv::GetObservation()
 {
-    // uint32_t flowNum = 64;
-    uint32_t flowNum = 64;
+    // uint32_t flowNum = 128;
+    uint32_t flowNum = 128;
     std::vector<Ptr<NetDeviceContainer>> devices(flowNum);
     std::vector<Ptr<Queue<Packet>>> queues(flowNum);
     std::vector<QueueSize> qSizes(flowNum);
@@ -250,7 +250,7 @@ MyGymEnv::ExecuteActions(Ptr<OpenGymDataContainer> action)
     Ptr<OpenGymBoxContainer<uint32_t> > box = DynamicCast<OpenGymBoxContainer<uint32_t> >(dict->Get("DataRate"));
     Ptr<OpenGymBoxContainer<uint32_t> > box2 = DynamicCast<OpenGymBoxContainer<uint32_t> >(dict->Get("BM"));
 
-    uint32_t flowNum = 64;
+    uint32_t flowNum = 128;
     std::vector<Ptr<NetDeviceContainer>> devices(flowNum);
     std::vector<uint32_t> dataRates(flowNum);
     std::vector<uint32_t> BM(flowNum);

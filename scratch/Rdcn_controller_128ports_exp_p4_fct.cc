@@ -347,7 +347,7 @@ for (std::size_t i = 0; i < nodePairs.size(); ++i) {
   Simulator::Run ();
 
   // Serialize Flow Monitor data to xml
-  flowMonitor->SerializeToXmlFile ("FlowMonitorData_p4_128ports_1G_mix_FB_x2.xml", true, true);
+  flowMonitor->SerializeToXmlFile ("FlowMonitorData_p4_128ports_1G_mix_FB_x2_temp.xml", true, true);
   
 //   Simulator::Destroy ();
 //   NS_LOG_INFO ("Done.");

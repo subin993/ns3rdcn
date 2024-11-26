@@ -13,15 +13,13 @@ simArgs = {"--simTime": simTime, "--stepTime": stepTime, "--testArg": 123}
 debug = False
 
 # Define the number of ports dynamically
-num_entities = 64  # Can be 8, 16, 32, etc.
+num_entities = 128  # Can be 8, 16, 32, etc.
 
 # Create the environment
 env = ns3env.Ns3Env(port=port, stepTime=stepTime, startSim=startSim,
                     simSeed=seed, simArgs=simArgs, debug=debug)
 env.reset()
 
-print("Observation space: ", env.observation_space, env.observation_space.dtype)
-print("Action space: ", env.action_space, env.action_space.dtype)
 
 currIt = 0
 for i in range(iterationNum):
@@ -42,7 +40,7 @@ for i in range(iterationNum):
 
         qs = [queuelength[i] for i in range(num_entities)]
         ds = [10] * num_entities  # Base data rate
-        bs = [5000] * num_entities  # All buffer sizes initialized to 5000
+        bs = [5000000] * num_entities  # All buffer sizes initialized to 5000
 
         current_idx = stepIdx % num_entities
         ds[current_idx] = 1000000  # Dynamically change data rate of the current port

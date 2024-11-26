@@ -21,8 +21,6 @@ env = ns3env.Ns3Env(port=port, stepTime=stepTime, startSim=startSim,
                     simSeed=seed, simArgs=simArgs, debug=debug)
 env.reset()
 
-print("Observation space: ", env.observation_space, env.observation_space.dtype)
-print("Action space: ", env.action_space, env.action_space.dtype)
 
 currIt = 0
 # Main simulation loop

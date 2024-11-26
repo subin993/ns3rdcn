@@ -13,14 +13,15 @@ simArgs = {"--simTime": simTime, "--stepTime": stepTime, "--testArg": 123}
 debug = False
 
 # Define the number of entities dynamically
-num_entities = 64  # Adjust this to 8, 16, 32, or 64 depending on the test configuration
+num_entities = 128  # Adjust this to 8, 16, 32, or 64 depending on the test configuration
 
 # Map for base cycles and active periods based on entity counts
 cycle_period_map = {
     8: (57, 27),
     16: (58, 28),
     32: (61, 31),
-    64: (67, 37)
+    64: (67, 37),
+    128: (79, 49)
 }
 
 # Get the cycle and period from the map based on the number of entities
@@ -31,12 +32,10 @@ env = ns3env.Ns3Env(port=port, stepTime=stepTime, startSim=startSim,
                     simSeed=seed, simArgs=simArgs, debug=debug)
 env.reset()
 
-print("Observation space: ", env.observation_space, env.observation_space.dtype)
-print("Action space: ", env.action_space, env.action_space.dtype)
 
 # Initialize simulation variables
 currIt = 0
-bs = [5000] * num_entities  # All buffer sizes initialized to 5000
+bs = [5000000] * num_entities  # All buffer sizes initialized to 5000
 
 for i in range(iterationNum):
     print("Start iteration: ", currIt)

@@ -122,12 +122,6 @@ main (int argc, char *argv[])
     "10.6.7.1"
 };
 
-//   for (const auto& ip : ipAddresses) {
-//       std::string filename = "packet_log_solstice_32ports" + ip + ".txt";
-//       std::ofstream logFile(filename, std::ios_base::trunc);
-//       logFile.close();
-//   }
-
   NodeContainer c;
 
   // Crate Node

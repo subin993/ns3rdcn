@@ -33,18 +33,18 @@ bars = ax.bar(positions,
 # Axis settings
 ax.set_xticks(positions)
 ax.set_xticklabels(techniques, fontsize=16, ha='center')
-ax.tick_params(axis='y', labelsize=16)
+ax.tick_params(axis='y', labelsize=18)
 ax.set_ylim(0, 1.1)  # Set y-axis range
-ax.set_ylabel('Normalized aggregate throughput', fontsize=16)
+ax.set_ylabel('Normalized aggregate throughput', fontsize=18)
 # ax.set_title('Normalized Aggregate Throughput Comparison', fontsize=18)
 ax.grid(True, axis='y', linestyle='--', alpha=0.7)
 
 # Adding the text labels on the bars
 for bar in bars:
     yval = bar.get_height()
-    ax.text(bar.get_x() + bar.get_width()/2, yval + 0.02, f'{yval:.2f}', ha='center', va='bottom', fontsize=15)
+    ax.text(bar.get_x() + bar.get_width()/2, yval + 0.02, f'{yval:.2f}', ha='center', va='bottom', fontsize=18)
 
 # Save the graph
 plt.tight_layout()
-plt.savefig('throughput_comparison_ABC.png', dpi=300, bbox_inches='tight')
+plt.savefig('throughput_comparison_ABC_new.png', dpi=300, bbox_inches='tight')
 plt.show()

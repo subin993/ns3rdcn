@@ -2,7 +2,7 @@ import numpy as np
 from scipy.stats import poisson
 import csv
 
-def save_policy_to_csv(policy, filename='itr_policy_2.csv'):
+def save_policy_to_csv(policy, filename='itr_policy_3.csv'):
     with open(filename, mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['Queue Size', 'Token Possession', 'Buffer Size', 'Threshold', 'Delta Buffer', 'Delta Threshold'])
@@ -10,7 +10,7 @@ def save_policy_to_csv(policy, filename='itr_policy_2.csv'):
             writer.writerow([*state, *action])
 
 # Constants
-B_max = 12000
+B_max = 25000
 lambda_on = 3000
 alpha = 0.01
 beta = 0.6
@@ -82,7 +82,7 @@ def itr_heuristic(states, actions):
         policy[state] = best_action
     return policy
 
-def save_policy_to_csv(policy, filename='itr_policy_2.csv'):
+def save_policy_to_csv(policy, filename='itr_policy_3.csv'):
     with open(filename, mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerow(['Queue Size', 'Token Possession', 'Buffer Size', 'Threshold', 'Delta Buffer', 'Delta Threshold'])

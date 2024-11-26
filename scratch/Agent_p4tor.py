@@ -4,7 +4,7 @@ import numpy as np
 from ns3gym import ns3env
 
 # Load policy from CSV
-policy_df = pd.read_csv('itr_policy_2.csv')
+policy_df = pd.read_csv('itr_policy_3.csv')
 
 def get_policy(queue_size, token_possession, buffer_size, current_threshold):
     # Find the matching policy
@@ -17,7 +17,8 @@ def get_policy(queue_size, token_possession, buffer_size, current_threshold):
 # Simulation parameters
 startSim = False
 iterationNum = 1
-port = 5566
+port = 3566
+# port = 6566
 simTime = 60  # seconds
 stepTime = 0.5  # seconds
 seed = 0
@@ -25,15 +26,13 @@ simArgs = {"--simTime": simTime, "--stepTime": stepTime, "--testArg": 123}
 debug = False
 
 # Define the number of entities dynamically
-num_entities = 64  # Can be set to 64, 32, 16, or 8
+num_entities = 128  # Can be set to 64, 32, 16, or 8
 
 # Create the environment
 env = ns3env.Ns3Env(port=port, stepTime=stepTime, startSim=startSim,
                     simSeed=seed, simArgs=simArgs, debug=debug)
 env.reset()
 
-print("Observation space: ", env.observation_space, env.observation_space.dtype)
-print("Action space: ", env.action_space, env.action_space.dtype)
 
 # Main simulation loop
 bs = [5000] * num_entities

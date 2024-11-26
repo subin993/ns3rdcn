@@ -40,7 +40,7 @@ def main():
     # Box Plot for each port configuration
     boxplot_data = plt.boxplot(all_avg_delay_times, labels=labels, vert=True, showfliers=False)  # Changed vert to True and hide fliers
     plt.yscale('log')  # Set y-axis to log scale
-    plt.ylabel('Flow completion time (μs)', fontsize=17)  # Changed xlabel to ylabel and adjusted unit
+    plt.ylabel('Flow completion time (μs)', fontsize=20)  # Changed xlabel to ylabel and adjusted unit
     plt.xticks(fontsize=17)  # Set x-axis ticks and fontsize
     plt.yticks(fontsize=17)  # Set y-axis ticks fontsize
     plt.grid(True, which="both", ls="--")
@@ -50,11 +50,11 @@ def main():
         median = np.median(avg_delay_times)
         max_whisker_value = boxplot_data['whiskers'][2*i-1].get_ydata()[1]
         
-        plt.text(i, median, f'{median:.2f}', horizontalalignment='center', fontsize=12, color='red', weight='bold')
-        plt.text(i, max_whisker_value, f'{max_whisker_value:.2f}', horizontalalignment='center', fontsize=12, color='blue', weight='bold')
+        plt.text(i, median, f'{median:.2f}', horizontalalignment='center', fontsize=15, color='red', weight='bold')
+        plt.text(i, max_whisker_value, f'{max_whisker_value:.2f}', horizontalalignment='center', fontsize=15, color='blue', weight='bold')
 
     plt.tight_layout()
-    plt.savefig('avg_delay_analysis_ABC.png', dpi=300, bbox_inches='tight')
+    plt.savefig('avg_delay_analysis_ABC_new.png', dpi=300, bbox_inches='tight')
     plt.show()
 
 if __name__ == "__main__":

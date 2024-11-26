@@ -31,6 +31,13 @@ ports_data = {
         'Solstice': 115048598,
         'RotorNet': 96381634,
         'kEC': 148235792
+    },
+    256: {
+        'GT': 306687454,
+        'P4-DADS': 279279838,
+        'Solstice': 181095112,
+        'RotorNet': 113445695,
+        'kEC': 226202015
     }
 }
 
@@ -65,17 +72,17 @@ for port in port_labels:
         # Add text labels on the bars
         for bar in bars:
             yval = bar.get_height()
-            ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.02, f'{yval:.2f}', ha='center', va='bottom', fontsize=17)
+            ax.text(bar.get_x() + bar.get_width() / 2, yval + 0.02, f'{yval:.2f}', ha='center', va='bottom', fontsize=20)
 
     # Axis settings
     ax.set_xticks([])  # Remove x-ticks
-    ax.tick_params(axis='y', labelsize=17)
+    ax.tick_params(axis='y', labelsize=20)
     ax.set_ylim(0, 1.1)  # Set y-axis range
     ax.set_ylabel('Normalized aggregate throughput', fontsize=20)
     # ax.set_xlabel(f'Number of ports: {port}', fontsize=20)
-    ax.legend(loc='lower right', fontsize=17)
+    ax.legend(loc='lower right', fontsize=20)
 
     # Save each graph
     plt.tight_layout()
-    plt.savefig(f'throughput_comparison_ports_{port}.png', dpi=300, bbox_inches='tight')
+    plt.savefig(f'throughput_comparison_ports_{port}_new.png', dpi=300, bbox_inches='tight')
     plt.close(fig)

@@ -44,6 +44,12 @@ def main():
             ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_kec_128ports_1G_mix_FB_INF.xml", "kEC"),
             ("/home/rdcn/ns-3.35-workshop/ns-3.35/EXP2/fct/FlowMonitorData_p4_128ports_1G_mix_FB.xml", "P4-DADS")
         ],
+        "256ports": [
+            ("/home/rdcn/ns-3.35-workshop/ns-3.35/FlowMonitorData_solstice_256ports_1G_mix_FB_INF.xml", "Solstice"),
+            ("/home/rdcn/ns-3.35-workshop/ns-3.35/FlowMonitorData_rotornet_256ports_1G_mix_FB_INF.xml", "RotorNet"),
+            ("/home/rdcn/ns-3.35-workshop/ns-3.35/FlowMonitorData_kec_256ports_1G_mix_FB_1_INF.xml", "kEC"),
+            ("/home/rdcn/ns-3.35-workshop/ns-3.35/FlowMonitorData_p4_256ports_1G_mix_FB_1.xml", "P4-DADS")
+        ],
     }
 
     for port_config, file_info in port_groups.items():
@@ -64,9 +70,9 @@ def main():
 
         # Box Plot for each port configuration
         boxplot_data = plt.boxplot(all_avg_delay_times, labels=labels, vert=True, showfliers=False)  # Changed vert to True and hide fliers
-        plt.ylabel('Flow completion time (μs)', fontsize=20)  # Changed xlabel to ylabel and adjusted unit
-        plt.yticks(fontsize=17)  # Set y-axis ticks and fontsize
-        plt.xticks(fontsize=17)  # Set x-axis ticks fontsize
+        plt.ylabel('Flow completion time (μs)', fontsize=22)  # Changed xlabel to ylabel and adjusted unit
+        plt.yticks(fontsize=20)  # Set y-axis ticks and fontsize
+        plt.xticks(fontsize=18)  # Set x-axis ticks fontsize
         plt.grid(True)
         
         # Annotate median and max whisker values
@@ -74,8 +80,8 @@ def main():
             median = np.median(avg_delay_times)
             max_whisker_value = boxplot_data['whiskers'][2*i-1].get_ydata()[1]
             
-            plt.text(i, median, f'{median:.2f}', horizontalalignment='center', fontsize=12, color='red', weight='bold')
-            plt.text(i, max_whisker_value, f'{max_whisker_value:.2f}', horizontalalignment='center', fontsize=12, color='blue', weight='bold')
+            plt.text(i, median, f'{median:.2f}', horizontalalignment='center', fontsize=15, color='red', weight='bold')
+            plt.text(i, max_whisker_value, f'{max_whisker_value:.2f}', horizontalalignment='center', fontsize=15, color='blue', weight='bold')
 
         plt.tight_layout()
         plt.savefig(f'avg_fct_analysis_{port_config}_1G.png', dpi=300, bbox_inches='tight')
